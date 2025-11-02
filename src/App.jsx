@@ -11,6 +11,10 @@ const App = () => {
     address: "Hanoi",
     phone: "0123456789",
   };
+
+  const addNewTodo = (data) => {
+    alert(`data received: ${data}`);
+  };
   //{key:value}
   return (
     <>
@@ -18,7 +22,7 @@ const App = () => {
         <div className="todo-title">
           <h1 className="title">Todo List</h1>
         </div>
-        <TodoInput />
+        <TodoInput addNewTodo={addNewTodo} />
         <TodoData name={ducanh} age={age} data={data} />
         <div className="todo-image">
           <img className="logo" src={logo} alt="" />
