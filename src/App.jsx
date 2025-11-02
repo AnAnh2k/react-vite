@@ -5,6 +5,13 @@ import TodoInput from "./components/todo/TodoInput";
 import logo from "./assets/react.svg";
 
 const App = () => {
+  const ducanh = "Duc Anh";
+  const age = 21;
+  const data = {
+    address: "Hanoi",
+    phone: "0123456789",
+  };
+  //{key:value}
   return (
     <>
       <div className="todo-container">
@@ -12,11 +19,10 @@ const App = () => {
           <h1 className="title">Todo List</h1>
         </div>
         <TodoInput />
-        <TodoData />
+        <TodoData name={ducanh} age={age} data={data} />
         <div className="todo-image">
           <img className="logo" src={logo} alt="" />
         </div>
-
         <TodoFooter />
       </div>
     </>
