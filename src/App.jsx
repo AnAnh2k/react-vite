@@ -3,18 +3,19 @@ import TodoData from "./components/todo/TodoData";
 import TodoFooter from "./components/todo/TodoFooter";
 import TodoInput from "./components/todo/TodoInput";
 import logo from "./assets/react.svg";
+import { useState } from "react";
 
 const App = () => {
-  const ducanh = "Duc Anh";
-  const age = 21;
-  const data = {
-    address: "Hanoi",
-    phone: "0123456789",
+  const [todoList, setTodoList] = useState([
+    { id: 1, title: "Learn React" },
+    { id: 2, title: "Learn JavaScript" },
+    { id: 3, title: "Learn HTML/CSS" },
+  ]);
+
+  const addNewTodo = (todoList) => {
+    setTodoList(todoList);
   };
 
-  const addNewTodo = (data) => {
-    alert(`data received: ${data}`);
-  };
   //{key:value}
   return (
     <>
@@ -23,7 +24,7 @@ const App = () => {
           <h1 className="title">Todo List</h1>
         </div>
         <TodoInput addNewTodo={addNewTodo} />
-        <TodoData name={ducanh} age={age} data={data} />
+        <TodoData todoList={todoList} />
         <div className="todo-image">
           <img className="logo" src={logo} alt="" />
         </div>

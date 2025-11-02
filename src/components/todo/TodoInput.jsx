@@ -1,11 +1,19 @@
+import { useState } from "react";
+
 const TodoInput = (props) => {
   const { addNewTodo } = props;
 
-  const handleClick = (value) => {
-    addNewTodo(value);
+  //useState trả về mảng gồm 2 phần tử
+  //phần tử 1: giá trị hiện tại
+  //phần tử 2: hàm dùng để cập nhật giá trịs
+  const [valueInput, setValueInput] = useState("");
+
+  const handleClick = (valueInput) => {
+    addNewTodo(valueInput);
   };
 
   const handleOnchange = (value) => {
+    setValueInput(value);
     console.log("Input changed:", value);
   };
   return (
@@ -21,11 +29,12 @@ const TodoInput = (props) => {
       <button
         className="btn"
         onClick={() => {
-          handleClick(data);
+          handleClick(valueInput);
         }}
       >
         Add
       </button>
+      <div>My text input is = {valueInput}</div>
     </div>
   );
 };
