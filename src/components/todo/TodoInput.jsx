@@ -8,13 +8,12 @@ const TodoInput = (props) => {
   //phần tử 2: hàm dùng để cập nhật giá trịs
   const [valueInput, setValueInput] = useState("");
 
-  const handleClick = (valueInput) => {
+  const handleClick = () => {
     addNewTodo(valueInput);
   };
 
   const handleOnchange = (value) => {
     setValueInput(value);
-    console.log("Input changed:", value);
   };
   return (
     <div className="todo-input">
@@ -29,7 +28,7 @@ const TodoInput = (props) => {
       <button
         className="btn"
         onClick={() => {
-          handleClick(valueInput);
+          handleClick();
         }}
       >
         Add

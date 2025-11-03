@@ -9,11 +9,21 @@ const App = () => {
   const [todoList, setTodoList] = useState([
     { id: 1, title: "Learn React" },
     { id: 2, title: "Learn JavaScript" },
-    { id: 3, title: "Learn HTML/CSS" },
   ]);
 
-  const addNewTodo = (todoList) => {
-    setTodoList(todoList);
+  const addNewTodo = (name) => {
+    const newTodo = {
+      id: randomIntFromInterval(1, 1000000),
+      name: name,
+    };
+    setTodoList([...todoList, newTodo]);
+    console.log("New todo added:", setTodoList);
+    //array .push
+  };
+
+  const randomIntFromInterval = (min, max) => {
+    // min and max included
+    return Math.floor(Math.random() * (max - min + 1) + min);
   };
 
   //{key:value}
