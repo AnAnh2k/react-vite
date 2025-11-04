@@ -35,7 +35,6 @@ const TodoInput = (props) => {
       >
         Add
       </button>
-      <div>My text input is = {valueInput}</div>
     </div>
   );
 };
