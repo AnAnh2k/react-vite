@@ -1,7 +1,10 @@
 const TodoData = (props) => {
   //props là object chứa tất cả các thuộc tính được truyền từ component cha
-  const { todoList } = props;
+  const { todoList, handleDeleteTodo } = props;
   console.log("Props received in TodoData:", todoList);
+  const handleClick = (id) => {
+    handleDeleteTodo(id);
+  };
   return (
     <>
       <div className="todo-data">
@@ -12,7 +15,14 @@ const TodoData = (props) => {
               <div>{item.name}</div>
               <div className="btn-row ">
                 <button className="btn-edit">Sửa</button>
-                <button className="btn-del">Delete</button>
+                <button
+                  className="btn-del"
+                  onClick={() => {
+                    handleClick(item.id);
+                  }}
+                >
+                  Delete
+                </button>
               </div>
             </div>
           );

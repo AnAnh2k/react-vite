@@ -9,6 +9,10 @@ const TodoInput = (props) => {
   const [valueInput, setValueInput] = useState("xin chào");
 
   const handleClick = () => {
+    if (valueInput.trim() === "") {
+      alert("Please enter a task");
+      return;
+    }
     addNewTodo(valueInput);
   };
 

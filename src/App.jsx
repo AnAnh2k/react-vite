@@ -23,6 +23,11 @@ const App = () => {
     return Math.floor(Math.random() * (max - min + 1) + min);
   };
 
+  const handleDeleteTodo = (id) => {
+    const updatedTodoList = todoList.filter((todo) => todo.id !== id);
+    setTodoList(updatedTodoList);
+  };
+
   //{key:value}
   return (
     <>
@@ -37,7 +42,7 @@ const App = () => {
             <img className="logo" src={logo} alt="" />
           </div>
         ) : (
-          <TodoData todoList={todoList} />
+          <TodoData todoList={todoList} handleDeleteTodo={handleDeleteTodo} />
         )}
 
         <TodoFooter />
