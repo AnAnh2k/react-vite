@@ -12,7 +12,7 @@
   font-size: 18px; /* slightly smaller for better rhythm */
   max-width: 720px; /* wider than original 600 for desktop */
   width: calc(100% - 32px);
-  margin: 28px auto;
+  margin: 28px auto 70px;
   padding: 22px;
   border-radius: 12px;
   background: linear-gradient(180deg, var(--bg), #ffffff 60%);

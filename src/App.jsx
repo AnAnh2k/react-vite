@@ -1,9 +1,10 @@
 import "./components/todo/todo.css";
 import TodoData from "./components/todo/TodoData";
-import TodoFooter from "./components/todo/TodoFooter";
 import TodoInput from "./components/todo/TodoInput";
 import logo from "./assets/react.svg";
 import { useState } from "react";
+import Header from "./components/layout/header";
+import Footer from "./components/layout/footer";
 
 const App = () => {
   const [todoList, setTodoList] = useState([]);
@@ -31,6 +32,7 @@ const App = () => {
   //{key:value}
   return (
     <>
+      <Header />
       <div className="todo-container">
         <div className="todo-title">
           <h1 className="title">Todo List</h1>
@@ -44,9 +46,8 @@ const App = () => {
         ) : (
           <TodoData todoList={todoList} handleDeleteTodo={handleDeleteTodo} />
         )}
-
-        <TodoFooter />
       </div>
+      <Footer />
     </>
   );
 };
