@@ -1,10 +1,7 @@
-import { useRouteError } from "react-router-dom";
+import { useRouteError, Link } from "react-router-dom"; // MỚI: Thêm 'Link'
 
 // Chúng ta sẽ định nghĩa các style ở đây
-// Lưu ý: Tên thuộc tính CSS sẽ được viết theo kiểu camelCase
-// Ví dụ: 'background-color' -> 'backgroundColor'
-//        'border-radius'  -> 'borderRadius'
-//        Các giá trị (value) có đơn vị (px, rem) phải là chuỗi (string)
+// ... (Các style cũ của bạn) ...
 
 const containerStyles = {
   display: "flex",
@@ -52,6 +49,20 @@ const detailsStyles = {
   textAlign: "left",
 };
 
+// MỚI: Style cho nút quay về trang chủ
+const buttonStyles = {
+  display: "inline-block",
+  marginTop: "25px", // Tạo khoảng cách với phần chi tiết lỗi
+  padding: "12px 25px",
+  fontSize: "1rem",
+  fontWeight: "600",
+  color: "#ffffff",
+  backgroundColor: "#3498db", // Một màu xanh dương thân thiện
+  borderRadius: "8px",
+  textDecoration: "none", // Bỏ gạch chân mặc định của thẻ <a> (do Link render ra)
+  cursor: "pointer",
+};
+
 export default function ErrorPage() {
   const error = useRouteError();
   console.error(error);
@@ -64,9 +75,12 @@ export default function ErrorPage() {
         <p style={textStyles}>Xin lỗi, một lỗi không mong muốn đã xảy ra.</p>
         <p style={detailsStyles}>
           {" "}
-          {/* Áp dụng style chi tiết lỗi */}
           <i>{error.statusText || error.message}</i>
         </p>
+
+        <Link to="/" style={buttonStyles}>
+          Quay về Trang chủ
+        </Link>
       </div>
     </div>
   );
