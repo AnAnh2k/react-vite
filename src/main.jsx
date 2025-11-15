@@ -1,4 +1,4 @@
-import React, { Children } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -8,6 +8,7 @@ import RegisterPage from "./pages/register.jsx";
 import UserPage from "./pages/user.jsx";
 import ProductPage from "./pages/product.jsx";
 import "./styles/global.css";
+import TodoApp from "./components/todo/ToDoApp.jsx";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
+      {
+        index: true,
+        element: <TodoApp />,
+      },
       {
         path: "/login",
         element: <LoginPage />,
