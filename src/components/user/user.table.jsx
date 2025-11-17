@@ -1,22 +1,7 @@
 import { Table } from "antd";
-import { fetchAllUserApi } from "../../services/api.service";
-import { useState, useEffect } from "react";
 
-const UserTable = () => {
-  const [dataUser, setDataUser] = useState([
-    {
-      _id: "1",
-      fullName: "An Duc Anh",
-      email: "anducanh@gmail.com",
-      address: "Hà Nội",
-    },
-  ]);
-
-  useEffect(() => {
-    console.log(">>> run effect 111");
-    loadUser();
-  }, []);
-
+const UserTable = (props) => {
+  const { dataUser } = props;
   const columns = [
     {
       title: "ID",
@@ -35,11 +20,6 @@ const UserTable = () => {
       dataIndex: "address",
     },
   ];
-
-  const loadUser = async () => {
-    const res = await fetchAllUserApi();
-    setDataUser(res.data);
-  };
 
   console.log(">>> run render 000");
 
