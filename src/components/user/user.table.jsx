@@ -1,8 +1,9 @@
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Table } from "antd";
+import { notification, Popconfirm, Table } from "antd";
 import UpdateUserModal from "./update.user.modal";
 import { useState } from "react";
 import ViewUserModal from "./view.user.detail";
+import { deleteUserApi } from "../../services/api.service";
 
 const UserTable = (props) => {
   const { dataUser, loadUser } = props;
@@ -12,6 +13,23 @@ const UserTable = (props) => {
 
   const [dataDetail, setDataDetail] = useState(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
+
+  const confirm = async (userId) => {
+    const res = await deleteUserApi(userId);
+    if (res.data) {
+      console.log("res data,", res.data);
+      notification.success({
+        message: "Update user",
+        description: `Update user successfully`,
+      });
+      await loadUser();
+    } else {
+      notification.error({
+        message: "Update user",
+        description: JSON.stringify(res.message) || "Update user failed",
+      });
+    }
+  };
 
   const columns = [
     {
@@ -56,18 +74,31 @@ const UserTable = (props) => {
               style={{ cursor: "pointer", color: "orange" }}
             />
 
-            <DeleteOutlined style={{ cursor: "pointer", color: "red" }} />
+            <Popconfirm
+              title="Delete the user"
+              description="Are you sure to delete this user?"
+              onConfirm={() => {
+                confirm(record._id);
+              }}
+              okText="Yes"
+              cancelText="No"
+            >
+              <DeleteOutlined
+                style={{ cursor: "pointer", color: "red" }}
+                onClick={() => {
+                  setUserId(record._id);
+                }}
+              />
+            </Popconfirm>
           </div>
         );
       },
     },
   ];
 
-  console.log(">>> run render 000");
-
   return (
     <>
-      <Table columns={columns} dataSource={dataUser} rowKey={"_id"} />;
+      <Table columns={columns} dataSource={dataUser} rowKey={"_id"} />
       <UpdateUserModal
         isModalUpdateOpen={isModalUpdateOpen}
         setIsModalUpdateOpen={setIsModalUpdateOpen}
@@ -75,6 +106,7 @@ const UserTable = (props) => {
         setDataUpdate={setDataUpdate}
         loadUser={loadUser}
       />
+
       <ViewUserModal
         dataDetail={dataDetail}
         setDataDetail={setDataDetail}
