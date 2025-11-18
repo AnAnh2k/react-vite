@@ -30,6 +30,7 @@ const UpdateUserModal = (props) => {
     setId("");
     setFullName("");
     setPhoneNumber("");
+    setDataUpdate(null);
   };
 
   const handleSubmitBtn = async () => {
