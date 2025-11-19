@@ -3,6 +3,7 @@ import { Menu } from "antd";
 import {
   BookOutlined,
   HomeOutlined,
+  SettingOutlined,
   UserAddOutlined,
   UsergroupAddOutlined,
 } from "@ant-design/icons";
@@ -31,10 +32,15 @@ const Header = () => {
       key: "book",
       icon: <BookOutlined />,
     },
+
     {
-      label: <Link to={"/register"}>Register</Link>,
-      key: "register",
-      icon: <UserAddOutlined />,
+      label: "Cài đặt",
+      key: "SubMenu",
+      icon: <SettingOutlined />,
+      children: [
+        { label: <Link to={"/login"}>Login</Link>, key: "login" },
+        { label: <Link to={"/register"}>Register</Link>, key: "register" },
+      ],
     },
   ];
   return (
