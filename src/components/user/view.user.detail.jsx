@@ -1,4 +1,4 @@
-import { Drawer } from "antd";
+import { Button, Drawer } from "antd";
 
 const ViewUserModal = (props) => {
   const { isDetailOpen, setIsDetailOpen, dataDetail, setDataDetail } = props;
@@ -38,10 +38,26 @@ const ViewUserModal = (props) => {
                   borderRadius: "50%",
                   objectFit: "cover",
                   marginRight: "20px",
+                  marginBottom: "20px",
                   boxShadow: "0 4px 8px rgba(0, 0, 0, 0.15)", // Đổ bóng
                   border: "2px solid #1890ff", // Viền màu nổi bật
                 }}
               />
+              <div style={{ marginBottom: "20px" }}>
+                <label
+                  style={{
+                    cursor: "pointer",
+                    padding: "8px 12px",
+                    borderRadius: "8px",
+                    backgroundColor: "#1677ff",
+                    color: "#fff",
+                  }}
+                  htmlFor="uploadfile"
+                >
+                  Upload avatar
+                </label>
+                <input type="file" id="uploadfile" hidden />
+              </div>
 
               {/* KHU VỰC ID */}
               <div>

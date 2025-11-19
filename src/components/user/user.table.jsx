@@ -83,12 +83,7 @@ const UserTable = (props) => {
               okText="Yes"
               cancelText="No"
             >
-              <DeleteOutlined
-                style={{ cursor: "pointer", color: "red" }}
-                onClick={() => {
-                  setUserId(record._id);
-                }}
-              />
+              <DeleteOutlined style={{ cursor: "pointer", color: "red" }} />
             </Popconfirm>
           </div>
         );
