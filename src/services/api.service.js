@@ -33,8 +33,8 @@ const updateUserAvatarApi = (_id, avatar, fullName, phoneNumber) => {
   return axios.put(URL_BACKEND, data);
 };
 
-const fetchAllUserApi = () => {
-  const URL_BACKEND = `/api/v1/user`;
+const fetchAllUserApi = (current, pageSize) => {
+  const URL_BACKEND = `/api/v1/user?current=${current}&pageSize=${pageSize}`;
   return axios.get(URL_BACKEND);
 };
 
