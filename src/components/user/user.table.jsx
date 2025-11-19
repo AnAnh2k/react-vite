@@ -106,7 +106,7 @@ const UserTable = (props) => {
     },
   ];
 
-  const onChange = (pagination, filters, sorter, extra) => {
+  const onChange = (pagination) => {
     //nếu thay đổi trang
     if (pagination && pagination.current) {
       if (+pagination.current !== +current) {
@@ -124,6 +124,7 @@ const UserTable = (props) => {
   return (
     <>
       <Table
+        style={{ marginBottom: "80px" }}
         columns={columns}
         dataSource={dataUser}
         rowKey={"_id"}
