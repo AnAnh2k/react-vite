@@ -4,6 +4,7 @@ import {
   Divider,
   Form,
   Input,
+  message,
   notification,
   Row,
   Space,
@@ -11,20 +12,19 @@ import {
 import { loginUserApi } from "../services/api.service";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowRightOutlined } from "@ant-design/icons";
+import { useState } from "react";
 
 const LoginPage = () => {
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(false);
+
   const onFinish = async (values) => {
-    console.log("Success:", values);
+    setLoading(true);
     const res = await loginUserApi(values.email, values.password);
-    console.log("check res", res);
     //call api
     if (res.data) {
-      notification.success({
-        message: "Login user",
-        description: `Login user successfully`,
-      });
+      message.success("Login user successfully");
       navigate("/");
     } else {
       notification.error({
@@ -32,6 +32,7 @@ const LoginPage = () => {
         description: JSON.stringify(res.message) || "Login user failed",
       });
     }
+    setLoading(false);
   };
 
   const [form] = Form.useForm();
@@ -84,15 +85,20 @@ const LoginPage = () => {
               </Form.Item>
               <Form.Item>
                 <Space
-                  style={{ display: "flex", justifyContent: "space-between" }}
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
                 >
                   <Button
                     type="primary"
                     onClick={() => {
                       form.submit();
                     }}
+                    loading={loading}
                   >
-                    Submit
+                    Login
                   </Button>
                   <Link to="/">
                     Go to homePage <ArrowRightOutlined />

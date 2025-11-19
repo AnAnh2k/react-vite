@@ -4,7 +4,6 @@ import {
   BookOutlined,
   HomeOutlined,
   SettingOutlined,
-  UserAddOutlined,
   UsergroupAddOutlined,
 } from "@ant-design/icons";
 import { useState } from "react";
@@ -34,7 +33,7 @@ const Header = () => {
     },
 
     {
-      label: "Cài đặt",
+      label: "Setting",
       key: "SubMenu",
       icon: <SettingOutlined />,
       children: [

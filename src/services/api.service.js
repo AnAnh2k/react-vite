@@ -71,7 +71,7 @@ const registerUserApi = (fullName, email, password, phoneNumber) => {
 const loginUserApi = (email, password) => {
   const URL_BACKEND = `/api/v1/auth/login`;
   const data = {
-    email,
+    username: email,
     password,
   };
   return axios.post(URL_BACKEND, data);
