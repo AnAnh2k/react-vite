@@ -1,8 +1,25 @@
-import { Button, Drawer } from "antd";
+import { Drawer } from "antd";
+import { useState } from "react";
 
 const ViewUserModal = (props) => {
   const { isDetailOpen, setIsDetailOpen, dataDetail, setDataDetail } = props;
 
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [preview, setPreview] = useState(null);
+  const handleOnChangeFile = (e) => {
+    if (!e.target.files || e.target.files.length === 0) {
+      setSelectedFile(null);
+      setPreview(null);
+      return;
+    }
+
+    // I've kept this example simple by using the first image instead of multiple
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+      setPreview(URL.createObjectURL(file));
+    }
+  };
   return (
     <Drawer
       title="Chi Tiết Người Dùng"
@@ -30,7 +47,9 @@ const ViewUserModal = (props) => {
             >
               {/* KHU VỰC AVATAR */}
               <img
-                src={`http://localhost:8080/images/avatar/${dataDetail.avatar}`}
+                src={`${import.meta.env.VITE_BACKEND_URL}/images/avatar/${
+                  dataDetail.avatar
+                }`}
                 alt="Avatar Người Dùng"
                 style={{
                   width: "80px",
@@ -56,8 +75,32 @@ const ViewUserModal = (props) => {
                 >
                   Upload avatar
                 </label>
-                <input type="file" id="uploadfile" hidden />
+                <input
+                  type="file"
+                  id="uploadfile"
+                  hidden
+                  // onChange={handleOnChangeFile}
+                  onChange={(event) => {
+                    handleOnChangeFile(event);
+                  }}
+                />
               </div>
+              {preview && (
+                <img
+                  src={preview}
+                  alt="Avatar Người Dùng"
+                  style={{
+                    width: "80px",
+                    height: "80px",
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                    marginRight: "20px",
+                    marginBottom: "20px",
+                    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.15)", // Đổ bóng
+                    border: "2px solid #1890ff", // Viền màu nổi bật
+                  }}
+                />
+              )}
 
               {/* KHU VỰC ID */}
               <div>
