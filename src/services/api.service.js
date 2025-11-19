@@ -1,17 +1,6 @@
 // import axios from "axios";
 import axios from "./axios.customize.js";
 
-const createUserApi = (fullName, email, password, phoneNumber) => {
-  const URL_BACKEND = `/api/v1/user`;
-  const data = {
-    fullName,
-    email,
-    password,
-    phone: phoneNumber,
-  };
-  return axios.post(URL_BACKEND, data);
-};
-
 const updateUserApi = (_id, fullName, phoneNumber) => {
   const URL_BACKEND = `/api/v1/user`;
   const data = {
@@ -57,7 +46,30 @@ const handleUploadFile = (file, folder) => {
   return axios.post(URL_BACKEND, bodyFormData, config);
 };
 
+const createUserApi = (fullName, email, password, phoneNumber) => {
+  const URL_BACKEND = `/api/v1/user`;
+  const data = {
+    fullName,
+    email,
+    password,
+    phone: phoneNumber,
+  };
+  return axios.post(URL_BACKEND, data);
+};
+
+const registerUserApi = (fullName, email, password, phoneNumber) => {
+  const URL_BACKEND = `/api/v1/user/register`;
+  const data = {
+    fullName,
+    email,
+    password,
+    phone: phoneNumber,
+  };
+  return axios.post(URL_BACKEND, data);
+};
+
 export {
+  registerUserApi,
   createUserApi,
   updateUserApi,
   fetchAllUserApi,
