@@ -1,8 +1,13 @@
-import { Drawer } from "antd";
+import { Button, Drawer, notification } from "antd";
 import { useState } from "react";
+import {
+  handleUploadFile,
+  updateUserAvatarApi,
+} from "../../services/api.service";
 
 const ViewUserModal = (props) => {
-  const { isDetailOpen, setIsDetailOpen, dataDetail, setDataDetail } = props;
+  const { isDetailOpen, setIsDetailOpen, dataDetail, setDataDetail, loadUser } =
+    props;
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -18,6 +23,42 @@ const ViewUserModal = (props) => {
     if (file) {
       setSelectedFile(file);
       setPreview(URL.createObjectURL(file));
+    }
+  };
+
+  const handleUpdateUserAvatar = async () => {
+    //step 1 upload file
+    const resUpload = await handleUploadFile(selectedFile, "avatar");
+    if (resUpload.data) {
+      //success
+      const newAvatar = resUpload.data.fileUploaded;
+      //step 2 update avatar
+      const resUpdateAvatar = await updateUserAvatarApi(
+        dataDetail._id,
+        newAvatar,
+        dataDetail.fullName,
+        dataDetail.phone
+      );
+      if (resUpdateAvatar.data) {
+        setIsDetailOpen(false);
+        setSelectedFile(null);
+        setPreview(null);
+        loadUser();
+        notification.success({
+          message: "Update user avatar",
+          description: "Update user avatar success",
+        });
+      } else {
+        notification.error({
+          message: "Update user avatar",
+          description: JSON.stringify(resUpdateAvatar.message),
+        });
+      }
+    } else {
+      notification.error({
+        message: "Error upload file",
+        description: JSON.stringify(resUpload.message),
+      });
     }
   };
   return (
@@ -57,7 +98,7 @@ const ViewUserModal = (props) => {
                   borderRadius: "50%",
                   objectFit: "cover",
                   marginRight: "20px",
-                  marginBottom: "20px",
+                  marginBottom: "30px",
                   boxShadow: "0 4px 8px rgba(0, 0, 0, 0.15)", // Đổ bóng
                   border: "2px solid #1890ff", // Viền màu nổi bật
                 }}
@@ -86,20 +127,35 @@ const ViewUserModal = (props) => {
                 />
               </div>
               {preview && (
-                <img
-                  src={preview}
-                  alt="Avatar Người Dùng"
-                  style={{
-                    width: "80px",
-                    height: "80px",
-                    borderRadius: "50%",
-                    objectFit: "cover",
-                    marginRight: "20px",
-                    marginBottom: "20px",
-                    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.15)", // Đổ bóng
-                    border: "2px solid #1890ff", // Viền màu nổi bật
-                  }}
-                />
+                <>
+                  {" "}
+                  <label htmlFor="">Preview avatar</label>
+                  <div style={{ marginBottom: "10px" }}>
+                    {" "}
+                    <img
+                      src={preview}
+                      alt="Avatar Người Dùng"
+                      style={{
+                        width: "80px",
+                        height: "80px",
+                        borderRadius: "50%",
+                        objectFit: "cover",
+                        marginRight: "20px",
+                        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.15)", // Đổ bóng
+                        border: "2px solid #1890ff", // Viền màu nổi bật
+                      }}
+                    />
+                  </div>
+                  <Button
+                    style={{ marginBottom: "20px" }}
+                    type="primary"
+                    onClick={() => {
+                      handleUpdateUserAvatar();
+                    }}
+                  >
+                    Save
+                  </Button>
+                </>
               )}
 
               {/* KHU VỰC ID */}
