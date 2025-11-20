@@ -3,8 +3,12 @@ import { Menu } from "antd";
 import {
   BookOutlined,
   HomeOutlined,
+  LoginOutlined,
+  LogoutOutlined,
   SettingOutlined,
+  UserAddOutlined,
   UsergroupAddOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
@@ -13,9 +17,9 @@ import { AuthContext } from "../context/auth.context";
 const Header = () => {
   const [current, setCurrent] = useState("home");
 
-  const data = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
-  console.log(">>>>check data:", data);
+  console.log(">>>>check data:", user);
 
   const onClick = (e) => {
     console.log("click ", e);
@@ -38,15 +42,40 @@ const Header = () => {
       icon: <BookOutlined />,
     },
 
-    {
-      label: "Setting",
-      key: "SubMenu",
-      icon: <SettingOutlined />,
-      children: [
-        { label: <Link to={"/login"}>Login</Link>, key: "login" },
-        { label: <Link to={"/register"}>Register</Link>, key: "register" },
-      ],
-    },
+    ...(!user.id
+      ? [
+          {
+            label: "Tài khoản ",
+            key: "account",
+            icon: <SettingOutlined />,
+            children: [
+              {
+                label: <Link to={"/login"}>Login</Link>,
+                key: "login",
+                icon: <LoginOutlined />,
+              },
+              {
+                label: <Link to={"/register"}>Register</Link>,
+                key: "register",
+                icon: <UserAddOutlined />,
+              },
+            ],
+          },
+        ]
+      : [
+          {
+            label: `Welcome ${user.fullName}`,
+            key: "setting",
+            icon: <UserOutlined />,
+            children: [
+              {
+                label: <Link to={"/login"}>Đăng xuất</Link>,
+                key: "logout",
+                icon: <LogoutOutlined />,
+              },
+            ],
+          },
+        ]),
   ];
   return (
     <>
