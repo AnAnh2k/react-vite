@@ -6,11 +6,17 @@ import {
   SettingOutlined,
   UsergroupAddOutlined,
 } from "@ant-design/icons";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../context/auth.context";
 
 const Header = () => {
   const [current, setCurrent] = useState("home");
+
+  const data = useContext(AuthContext);
+
+  console.log(">>>>check data:", data);
+
   const onClick = (e) => {
     console.log("click ", e);
     setCurrent(e.key);

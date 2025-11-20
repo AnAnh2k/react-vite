@@ -12,12 +12,14 @@ import {
 import { loginUserApi } from "../services/api.service";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowRightOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../components/context/auth.context";
 
 const LoginPage = () => {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
+  const { setUser } = useContext(AuthContext);
 
   const onFinish = async (values) => {
     setLoading(true);
@@ -25,6 +27,8 @@ const LoginPage = () => {
     //call api
     if (res.data) {
       message.success("Login user successfully");
+      localStorage.setItem("access_token", res.data.access_token);
+      setUser(res.data.user);
       navigate("/");
     } else {
       notification.error({
