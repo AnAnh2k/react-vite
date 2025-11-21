@@ -24,7 +24,6 @@ const UpdateUserModal = (props) => {
     }
   }, [dataUpdate]);
 
-  console.log("check dataupdate: ", dataUpdate);
   const resetAndCloseModal = () => {
     setIsModalUpdateOpen(false);
     setId("");
@@ -36,7 +35,6 @@ const UpdateUserModal = (props) => {
   const handleSubmitBtn = async () => {
     const res = await updateUserApi(id, fullName, phoneNumber);
     if (res.data) {
-      console.log("res data,", res.data);
       notification.success({
         message: "Update user",
         description: `Update user successfully`,

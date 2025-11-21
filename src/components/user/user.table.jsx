@@ -26,7 +26,6 @@ const UserTable = (props) => {
   const confirm = async (userId) => {
     const res = await deleteUserApi(userId);
     if (res.data) {
-      console.log("res data,", res.data);
       notification.success({
         message: "Update user",
         description: `Update user successfully`,

@@ -13,7 +13,6 @@ const TodoApp = () => {
       name: name,
     };
     setTodoList([...todoList, newTodo]);
-    console.log("New todo added:", setTodoList);
     //array .push
   };
 
