@@ -1,5 +1,5 @@
 // import "./header.css";
-import { Menu } from "antd";
+import { Menu, message } from "antd";
 import {
   BookOutlined,
   HomeOutlined,
@@ -11,10 +11,13 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
+import { logoutApi } from "../../services/api.service";
 
 const Header = () => {
+  const navigate = useNavigate();
+
   const [current, setCurrent] = useState("home");
 
   const { user, setUser } = useContext(AuthContext);
@@ -22,6 +25,27 @@ const Header = () => {
   const onClick = (e) => {
     setCurrent(e.key);
   };
+
+  const handleLogout = async () => {
+    const res = await logoutApi();
+    if (res.data) {
+      //clear data
+      localStorage.removeItem("access_token");
+      setUser({
+        email: "",
+        phone: "",
+        fullName: "",
+        role: "",
+        avatar: "",
+        id: "",
+      });
+      message.success("Logout success");
+
+      //redirect to home
+      navigate("/");
+    }
+  };
+
   const items = [
     {
       label: <Link to={"/"}>Home</Link>,
@@ -67,7 +91,12 @@ const Header = () => {
             children: [
               {
                 label: (
-                  <Link to={"/login"} onClick={() => {}}>
+                  <Link
+                    to={"/login"}
+                    onClick={() => {
+                      handleLogout();
+                    }}
+                  >
                     Đăng xuất
                   </Link>
                 ),
