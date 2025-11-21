@@ -17,7 +17,7 @@ import { AuthContext } from "../context/auth.context";
 const Header = () => {
   const [current, setCurrent] = useState("home");
 
-  const { user } = useContext(AuthContext);
+  const { user, setUser } = useContext(AuthContext);
 
   const onClick = (e) => {
     setCurrent(e.key);
@@ -66,7 +66,11 @@ const Header = () => {
             icon: <UserOutlined />,
             children: [
               {
-                label: <Link to={"/login"}>Đăng xuất</Link>,
+                label: (
+                  <Link to={"/login"} onClick={() => {}}>
+                    Đăng xuất
+                  </Link>
+                ),
                 key: "logout",
                 icon: <LogoutOutlined />,
               },
