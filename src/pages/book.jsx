@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { fetchAllBookApi } from "../services/api.service";
 import BookTable from "../components/book/book.table";
 import BookForm from "../components/book/book.form";
+import BookFormUncontroll from "../components/book/create.book.uncontroll";
 
 const BookPage = () => {
   const [dataBook, setDataBook] = useState([]);
@@ -14,7 +15,6 @@ const BookPage = () => {
 
   const loadBook = async () => {
     const res = await fetchAllBookApi(current, pageSize);
-    console.log("check book,", res);
     if (res.data) {
       setDataBook(res.data.result);
       setCurrent(res.data.meta.current);
@@ -24,7 +24,8 @@ const BookPage = () => {
   };
   return (
     <>
-      <BookForm loadBook={loadBook} />
+      {/* <BookForm loadBook={loadBook} /> */}
+      <BookFormUncontroll loadBook={loadBook} />
       <BookTable
         dataBook={dataBook}
         loadBook={loadBook}
