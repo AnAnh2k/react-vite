@@ -11,6 +11,7 @@ import TodoApp from "./components/todo/ToDoApp.jsx";
 import BookPage from "./pages/book.jsx";
 import { AuthWrapper } from "./components/context/auth.context.jsx";
 import PrivateRoute from "./pages/priavte.router.jsx";
+import "nprogress/nprogress.css";
 
 const router = createBrowserRouter([
   {
