@@ -2,8 +2,9 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { notification, Popconfirm, Table } from "antd";
 import { useState } from "react";
 import { deleteUserApi } from "../../services/api.service";
-import UpdateBookModal from "./update.book.modal";
+// import UpdateBookModal from "./update.book.modal.uncontrollerjsx";
 import ViewBookModal from "./view.book.detail";
+import UpdateBookModalUncontroll from "./update.book.modalUncontroller";
 
 const BookTable = (props) => {
   const {
@@ -151,7 +152,14 @@ const BookTable = (props) => {
         }}
         onChange={onChange}
       />
-      <UpdateBookModal
+      {/* <UpdateBookModal
+        isModalUpdateOpen={isModalUpdateOpen}
+        setIsModalUpdateOpen={setIsModalUpdateOpen}
+        dataUpdate={dataUpdate}
+        setDataUpdate={setDataUpdate}
+        loadBook={loadBook}
+      /> */}
+      <UpdateBookModalUncontroll
         isModalUpdateOpen={isModalUpdateOpen}
         setIsModalUpdateOpen={setIsModalUpdateOpen}
         dataUpdate={dataUpdate}
