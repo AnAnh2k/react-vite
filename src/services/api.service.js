@@ -124,6 +124,28 @@ const updateBookImageApi = (_id, thumbnail) => {
   return axios.put(URL_BACKEND, data);
 };
 
+const updateBookApi = (
+  _id,
+  newImage,
+  mainText,
+  author,
+  price,
+  quantity,
+  category
+) => {
+  const URL_BACKEND = `/api/v1/book`;
+  const data = {
+    _id,
+    thumbnail: newImage,
+    mainText,
+    author,
+    price: +price,
+    quantity: +quantity,
+    category,
+  };
+  return axios.put(URL_BACKEND, data);
+};
+
 export {
   registerUserApi,
   createUserApi,
@@ -138,4 +160,5 @@ export {
   fetchAllBookApi,
   createBookApi,
   updateBookImageApi,
+  updateBookApi,
 };
