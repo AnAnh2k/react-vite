@@ -16,6 +16,8 @@ const BookFormUncontroll = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [preview, setPreview] = useState(null);
+  const [loading, setLoading] = useState(false);
+
   const [form] = Form.useForm();
 
   const handleOnChangeFile = (e) => {
@@ -41,12 +43,14 @@ const BookFormUncontroll = (props) => {
   };
 
   const handleSubmitBtn = async (values) => {
+    setLoading(true);
     const resUpload = await handleUploadFile(selectedFile, "book");
     if (!resUpload.data) {
       notification.error({
         message: "Error create book",
         description: "Vui lòng upload ảnh thumbnail",
       });
+      setLoading(false);
       return;
     }
     const newImage = resUpload.data.fileUploaded;
@@ -63,6 +67,8 @@ const BookFormUncontroll = (props) => {
         message: "Create book",
         description: `create book "${res.data.fullName}" successfully`,
       });
+      setLoading(false);
+
       resetAndCloseModal();
       await loadBook();
     } else {
@@ -70,6 +76,7 @@ const BookFormUncontroll = (props) => {
         message: "Create book",
         description: JSON.stringify(res.message) || "create book failed",
       });
+      setLoading(false);
     }
   };
 
@@ -97,6 +104,9 @@ const BookFormUncontroll = (props) => {
       <Modal
         title="Create User"
         open={isModalOpen}
+        okButtonProps={{
+          loading: loading,
+        }}
         onOk={() => {
           form.submit();
         }}

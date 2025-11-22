@@ -10,17 +10,32 @@ import {
   UsergroupAddOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/auth.context";
 import { logoutApi } from "../../services/api.service";
 
 const Header = () => {
+  const [current, setCurrent] = useState("");
   const navigate = useNavigate();
-
-  const [current, setCurrent] = useState("home");
+  const location = useLocation();
 
   const { user, setUser } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (location && location.pathname) {
+      const allRoutes = ["users", "books", "login", "register"];
+      const currentRoute = allRoutes.find(
+        (item) => `/${item}` === location.pathname
+      );
+
+      if (currentRoute) {
+        setCurrent(currentRoute);
+      } else {
+        setCurrent("home");
+      }
+    }
+  }, [location]);
 
   const onClick = (e) => {
     setCurrent(e.key);
@@ -54,12 +69,12 @@ const Header = () => {
     },
     {
       label: <Link to={"/users"}>User</Link>,
-      key: "user",
+      key: "users",
       icon: <UsergroupAddOutlined />,
     },
     {
       label: <Link to={"/books"}>Book</Link>,
-      key: "book",
+      key: "books",
       icon: <BookOutlined />,
     },
 

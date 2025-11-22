@@ -8,6 +8,7 @@ import UpdateBookModalUncontroll from "./update.book.modalUncontroller";
 
 const BookTable = (props) => {
   const {
+    loadingTable,
     dataBook,
     loadBook,
     current,
@@ -152,6 +153,7 @@ const BookTable = (props) => {
           },
         }}
         onChange={onChange}
+        loading={loadingTable}
       />
       {/* <UpdateBookModal
         isModalUpdateOpen={isModalUpdateOpen}
