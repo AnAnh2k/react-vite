@@ -27,14 +27,14 @@ const UserTable = (props) => {
     const res = await deleteUserApi(userId);
     if (res.data) {
       notification.success({
-        message: "Update user",
-        description: `Update user successfully`,
+        message: "Delete user",
+        description: `Delete user successfully`,
       });
       await loadUser();
     } else {
       notification.error({
-        message: "Update user",
-        description: JSON.stringify(res.message) || "Update user failed",
+        message: "Delete user",
+        description: JSON.stringify(res.message) || "Delete user failed",
       });
     }
   };

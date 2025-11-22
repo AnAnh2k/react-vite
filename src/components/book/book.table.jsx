@@ -1,7 +1,7 @@
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { notification, Popconfirm, Table } from "antd";
 import { useState } from "react";
-import { deleteUserApi } from "../../services/api.service";
+import { deleteBookApi } from "../../services/api.service";
 // import UpdateBookModal from "./update.book.modal.uncontrollerjsx";
 import ViewBookModal from "./view.book.detail";
 import UpdateBookModalUncontroll from "./update.book.modalUncontroller";
@@ -24,18 +24,18 @@ const BookTable = (props) => {
   const [dataDetail, setDataDetail] = useState(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
 
-  const confirm = async (userId) => {
-    const res = await deleteUserApi(userId);
+  const confirm = async (bookId) => {
+    const res = await deleteBookApi(bookId);
     if (res.data) {
       notification.success({
-        message: "Update user",
-        description: `Update user successfully`,
+        message: "Delete book",
+        description: `Delete book successfully`,
       });
       await loadBook();
     } else {
       notification.error({
-        message: "Update user",
-        description: JSON.stringify(res.message) || "Update user failed",
+        message: "Delete book",
+        description: JSON.stringify(res.message) || "Delete book failed",
       });
     }
   };
@@ -100,6 +100,7 @@ const BookTable = (props) => {
             <Popconfirm
               title="Delete the user"
               description="Are you sure to delete this user?"
+              placement="leftTop"
               onConfirm={() => {
                 confirm(record._id);
               }}
