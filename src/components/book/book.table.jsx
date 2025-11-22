@@ -3,6 +3,7 @@ import { notification, Popconfirm, Table } from "antd";
 import { useState } from "react";
 import { deleteUserApi } from "../../services/api.service";
 import UpdateBookModal from "./update.book.modal";
+import ViewBookModal from "./view.book.detail";
 
 const BookTable = (props) => {
   const {
@@ -19,8 +20,8 @@ const BookTable = (props) => {
   const [isModalUpdateOpen, setIsModalUpdateOpen] = useState(false);
   const [dataUpdate, setDataUpdate] = useState(null);
 
-  // const [dataDetail, setDataDetail] = useState(null);
-  // const [isDetailOpen, setIsDetailOpen] = useState(false);
+  const [dataDetail, setDataDetail] = useState(null);
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
 
   const confirm = async (userId) => {
     const res = await deleteUserApi(userId);
@@ -54,8 +55,8 @@ const BookTable = (props) => {
             <a
               href="#"
               onClick={() => {
-                // setDataDetail(record);
-                // setIsDetailOpen(true);
+                setDataDetail(record);
+                setIsDetailOpen(true);
               }}
             >
               {record._id}
@@ -158,13 +159,13 @@ const BookTable = (props) => {
         loadBook={loadBook}
       />
 
-      {/*  <ViewUserModal
+      <ViewBookModal
         dataDetail={dataDetail}
         setDataDetail={setDataDetail}
         isDetailOpen={isDetailOpen}
         setIsDetailOpen={setIsDetailOpen}
         loadBook={loadBook}
-      /> */}
+      />
     </>
   );
 };

@@ -1,6 +1,6 @@
-import { Button, Input, Modal, notification, Select } from "antd";
+import { Button, Input, InputNumber, Modal, notification, Select } from "antd";
 import { useState } from "react";
-import { createBookApi } from "../../services/api.service";
+import { createBookApi, handleUploadFile } from "../../services/api.service";
 
 const BookForm = (props) => {
   const { loadBook } = props;
@@ -12,6 +12,22 @@ const BookForm = (props) => {
   const [category, setCategory] = useState("");
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [preview, setPreview] = useState(null);
+  const handleOnChangeFile = (e) => {
+    if (!e.target.files || e.target.files.length === 0) {
+      setSelectedFile(null);
+      setPreview(null);
+      return;
+    }
+
+    // I've kept this example simple by using the first image instead of multiple
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+      setPreview(URL.createObjectURL(file));
+    }
+  };
 
   const resetAndCloseModal = () => {
     setIsModalOpen(false);
@@ -19,11 +35,28 @@ const BookForm = (props) => {
     setAuthor("");
     setPrice("");
     setQuantity("");
-    setCategory("");
+    setCategory(null);
+    setSelectedFile(null);
+    setPreview(null);
   };
 
   const handleSubmitBtn = async () => {
-    const res = await createBookApi(mainText, author, price, category);
+    const resUpload = await handleUploadFile(selectedFile, "book");
+    if (!resUpload.data) {
+      notification.error({
+        message: "Error create book",
+        description: "Vui lòng upload ảnh thumbnail",
+      });
+    }
+    const newImage = resUpload.data.fileUploaded;
+    const res = await createBookApi(
+      newImage,
+      mainText,
+      author,
+      price,
+      quantity,
+      category
+    );
     if (res.data) {
       notification.success({
         message: "Create book",
@@ -65,7 +98,7 @@ const BookForm = (props) => {
         onOk={() => {
           handleSubmitBtn();
         }}
-        onCancel={() => setIsModalOpen(false)}
+        onCancel={() => resetAndCloseModal()}
         okText={"Create"}
       >
         <div style={{ display: "flex", gap: "15px", flexDirection: "column" }}>
@@ -89,19 +122,22 @@ const BookForm = (props) => {
           </div>
           <div>
             <span>Giá</span>
-            <Input
+            <InputNumber
+              suffix="VNĐ"
+              style={{ width: "100%" }}
               value={price}
               onChange={(event) => {
-                setPrice(event.target.value);
+                setPrice(event);
               }}
             />
           </div>
           <div>
             <span>Số lượng</span>
-            <Input
+            <InputNumber
+              style={{ width: "100%" }}
               value={quantity}
               onChange={(event) => {
-                setQuantity(event.target.value);
+                setQuantity(event);
               }}
             />
           </div>
@@ -109,17 +145,24 @@ const BookForm = (props) => {
             <span>Loại sách</span>
             <Select
               style={{ width: "100%" }}
+              value={category}
+              onSelect={(event) => {
+                console.log("check event", event);
+                setCategory(event);
+              }}
               options={[
-                { label: "Business", value: "Business" },
-                { label: "Arts", value: "Arts" },
-                { label: "Teen", value: "Teen" },
-                { label: "Cooking", value: "Cooking" },
-                { label: "Entertainment", value: "Entertainment" },
-                { label: "History", value: "History" },
-                { label: "Music", value: "Music" },
-                { label: "Sports", value: "Sports" },
-                { label: "Comics", value: "Comics" },
-                { label: "Travel", value: "Travel" },
+                { value: "Arts", label: "Arts" },
+                { value: "Business", label: "Business" },
+                { value: "Comics", label: "Comics" },
+
+                { value: "Cooking", label: "Cooking" },
+                { value: "Entertainment", label: "Entertainment" },
+                { value: "History", label: "History" },
+
+                { value: "Music", label: "Music" },
+                { value: "Sports", label: "Sports" },
+                { value: "Teen", label: "Teen" },
+                { value: "Travel", label: "Travel" },
               ]}
             />
             {/* <Input
@@ -130,6 +173,57 @@ const BookForm = (props) => {
                 setCategory(event.target.value);
               }}
             /> */}
+          </div>
+          <div>
+            <span>Ảnh thumbnail</span>
+
+            <div style={{ marginBottom: "20px", marginTop: "20px" }}>
+              <label
+                style={{
+                  cursor: "pointer",
+                  padding: "8px 12px",
+                  borderRadius: "8px",
+                  backgroundColor: "#1677ff",
+                  color: "#fff",
+                }}
+                htmlFor="uploadfile"
+              >
+                Upload ảnh sách
+              </label>
+              <input
+                type="file"
+                id="uploadfile"
+                hidden
+                // onChange={handleOnChangeFile}
+                onChange={(event) => {
+                  handleOnChangeFile(event);
+                }}
+                onClick={(event) => {
+                  event.target.value = null;
+                }}
+              />
+            </div>
+            {preview && (
+              <>
+                {" "}
+                <label htmlFor="">Preview ảnh</label>
+                <div style={{ marginBottom: "10px" }}>
+                  {" "}
+                  <img
+                    src={preview}
+                    alt="Avatar Người Dùng"
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      objectFit: "cover",
+                      marginRight: "20px",
+                      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.15)", // Đổ bóng
+                      border: "2px solid #1890ff", // Viền màu nổi bật
+                    }}
+                  />
+                </div>
+              </>
+            )}
           </div>
         </div>
       </Modal>

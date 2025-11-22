@@ -95,10 +95,17 @@ const fetchAllBookApi = (current, pageSize) => {
   return axios.get(URL_BACKEND);
 };
 
-const createBookApi = (mainText, author, price, quantity, category) => {
+const createBookApi = (
+  newImage,
+  mainText,
+  author,
+  price,
+  quantity,
+  category
+) => {
   const URL_BACKEND = `/api/v1/book`;
   const data = {
-    thumbnail: "abc.png",
+    thumbnail: newImage,
     mainText,
     author,
     price: +price,
@@ -106,6 +113,15 @@ const createBookApi = (mainText, author, price, quantity, category) => {
     category,
   };
   return axios.post(URL_BACKEND, data);
+};
+
+const updateBookImageApi = (_id, thumbnail) => {
+  const URL_BACKEND = `/api/v1/book`;
+  const data = {
+    _id: _id,
+    thumbnail,
+  };
+  return axios.put(URL_BACKEND, data);
 };
 
 export {
@@ -121,4 +137,5 @@ export {
   logoutApi,
   fetchAllBookApi,
   createBookApi,
+  updateBookImageApi,
 };
